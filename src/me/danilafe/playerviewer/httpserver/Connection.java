@@ -1,14 +1,18 @@
 package me.danilafe.playerviewer.httpserver;
 
+
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import org.json.simple.*;
 import org.bukkit.entity.Player;
 
 public class Connection {
@@ -25,6 +29,7 @@ public class Connection {
 				while((st = br.readLine()) != null){
 					if(st.equals("")) break;
 					args.add(st);
+					
 				}
 				
 				if(args.size() > 0){
@@ -270,5 +275,6 @@ public class Connection {
 		ps.println("</div>");
 		ps.println("</div>");
 	}
+
 
 }
