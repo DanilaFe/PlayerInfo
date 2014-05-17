@@ -1,0 +1,51 @@
+body {
+    font-family:  "Century Gothic",Gotham ,Sans-serif,"Comic Sans MS",Tahoma,Arial;
+    margin: 0px;
+     background-color: #CCFFCC;
+}
+div{
+ margin: 10px;   
+}
+
+div.parent{
+
+ width: auto;
+ height: auto;
+ overflow:hidden;
+
+}
+
+div.player {
+ float: left;
+ width: 360px;
+ height: 400px;
+ background-color: #99FF99;
+ margin-right: 50px;
+ margin-bottom: 50px;
+ box-shadow: 1px 1px 5px #888888;
+ border-bottom-left-radius: 50px 50px;
+ border-bottom-right-radius: 50px 50px;
+ border-top-left-radius: 50px 50px;   
+ border-top-right-radius: 50px 50px;
+}
+
+div.player:hover{
+content: "Click for more info.";
+ background-color: #99FF50;
+}
+
+
+.center{
+ margin-left: 30%;   
+ margin-right: 30%;
+ width: 40%;
+}
+
+.img{
+margin-left: 30%;
+margin-right: 30%;
+width: 40%;
+box-shadow: 1px 1px 5px #888888;
+}
+
+

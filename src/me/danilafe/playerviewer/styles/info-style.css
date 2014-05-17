@@ -1,0 +1,37 @@
+
+body{    
+    font-family:  "Century Gothic",Gotham ,Sans-serif,"Comic Sans MS",Tahoma,Arial;
+ margin: 20px;   
+     background-color: #99FF99 /*#99FF99;*/   
+}
+
+img {
+ box-shadow: 1px 1px 5px #888888;   
+}
+
+div.info{
+
+}
+
+div.infopiece{
+    margin-right: 10px;
+    margin-top: 10px;
+    float: left;
+    width: 180px;
+    height: 200px;
+    padding: 10px;
+    background-color: #CCFFCC;
+    border-width: 3px;
+    border-bottom-left-radius: 1em 1em;
+    border-bottom-right-radius: 1em 1em;
+    border-top-left-radius: 1em 1em;
+    border-top-right-radius: 1em 1em;
+    
+}
+
+.cent{
+    width:40%;
+    margin-right: 30%;
+    margin-left: 30%;
+    
+}
