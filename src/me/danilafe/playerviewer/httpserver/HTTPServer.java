@@ -10,7 +10,7 @@ public class HTTPServer {
 	private HTTPServer me = this;
 	public ServerSocket ss;
 	public PlayerInfo parent;
-	private Thread listener = new Thread(){
+	public Thread listener = new Thread(){
 		public void run(){
 			while(true){
 				try {
