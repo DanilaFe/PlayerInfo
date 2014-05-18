@@ -11,9 +11,14 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Set;
 
 import org.json.simple.*;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.Objective;
+import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.ScoreboardManager;
 
 public class Connection {
 	
@@ -56,6 +61,7 @@ public class Connection {
 		
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void command(String command){
 		if(command.startsWith("GET")){
 			String[] pieces = command.split(" ");
@@ -63,6 +69,7 @@ public class Connection {
 				ps.println("HTTP/1.1 200 OK");
 				ps.println("Date: " + Calendar.getInstance().getTime().toGMTString());
 				ps.println("Content-Type:" + "text/html");
+				ps.println("Connection: Closed");
 				ps.println();
 				
 				String[] mainhtml1 = new String[]{
@@ -70,6 +77,7 @@ public class Connection {
 					"<html>",
 					"<head>",
 					getInsideTag("title", "DanilaFe's Server Checker"),//TODO custom name
+					"<meta http-equiv=\"refresh\" content=\"5\">",
 					"<link rel=\"stylesheet\" type=\"text/css\" href=\"styles/playerstyle.css\">",
 					"</head>",
 					"<body>",
@@ -134,6 +142,7 @@ public class Connection {
 				ps.println("HTTP/1.1 200 OK");
 				ps.println("Date: " + Calendar.getInstance().getTime().toGMTString());
 				ps.println("Content-Type:" + "text/css");
+				ps.println("Connection: Closed");
 				ps.println();
 				
 				BufferedReader cssread = new BufferedReader(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream("me/danilafe/playerviewer/styles/playerstyle.css")));
@@ -163,6 +172,7 @@ public class Connection {
 				ps.println("HTTP/1.1 200 OK");
 				ps.println("Date: " + Calendar.getInstance().getTime().toGMTString());
 				ps.println("Content-Type:" + "text/css");
+				ps.println("Connection: Closed");
 				ps.println();
 				
 				BufferedReader cssread = new BufferedReader(new InputStreamReader(this.getClass().getClassLoader().getResourceAsStream("me/danilafe/playerviewer/styles/info-style.css")));
@@ -193,6 +203,7 @@ public class Connection {
 						ps.println("HTTP/1.1 200 OK");
 						ps.println("Date: " + Calendar.getInstance().getTime().toGMTString());
 						ps.println("Content-Type:" + "text/html");
+						ps.println("Connection: Closed");
 						ps.println();
 						String[] mainhtml1 = new String[]{
 								"<!DOCTYPE HTML>",
@@ -200,6 +211,7 @@ public class Connection {
 								"<head>",
 								getInsideTag("title", p.getName()),
 								"<link rel=\"stylesheet\" type=\"text/css\" href=\"styles/info-style.css\">",
+								"<meta http-equiv=\"refresh\" content=\"5\">",
 								"</head>",
 								"<body>",
 								"<div class = \"info\">",
@@ -216,8 +228,28 @@ public class Connection {
 						ps.println("</div>");
 						
 						printInfoElement("Health:", p.getHealth() + "/" + "20");
+						printInfoElement("Hunger:", p.getFoodLevel() + "/" + "20");
 						printInfoElement("Is allowed to fly?", Boolean.toString(p.getAllowFlight()));
 						printInfoElement("XP Level:", Integer.toString(p.getLevel()));
+						printInfoElement("Current world:", p.getWorld().getName());
+						printInfoElement("Item in hand:", p.getItemInHand().getType().name().replace("_", "<br>"));
+						printInfoElement("IP:", p.getAddress().getAddress().toString());
+						
+						if(parent.parent.config.getBoolean("Scoreboard")){
+							ScoreboardManager manager = Bukkit.getScoreboardManager();
+							Scoreboard board = manager.getMainScoreboard();
+							Set<Objective> obj = board.getObjectives();
+							for(Objective objective: obj){
+								ps.println("<div class = \"infopiece\" >");
+								ps.println(getInsideTag("h3", objective.getName(), "cent"));
+								ps.println(getInsideTag("h4", "" + objective.getScore(p).getScore(), "cent"));
+								ps.println("</div>");
+								ps.println("</div>");
+							}
+							
+							
+						}
+
 						
 						ps.println("</body>");
 						ps.println("</html>");
