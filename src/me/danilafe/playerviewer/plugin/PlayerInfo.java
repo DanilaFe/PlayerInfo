@@ -35,11 +35,15 @@ public class PlayerInfo extends JavaPlugin{
 		t.start();
 		http = new HTTPServer(4312, this);
 		logger.info(pdfile.getName() + " has been enabled.");
+		config.addDefault("Scoreboard", true);
+		config.options().copyDefaults(true);
+		saveConfig();
 	}
 	
 	public void onDisable(){
 		logger.info(pdfile.getName() + " has been disabled.");
 		try {
+			http.listener.stop();
 			http.ss.close();
 		} catch (IOException e) {
 			e.printStackTrace();
