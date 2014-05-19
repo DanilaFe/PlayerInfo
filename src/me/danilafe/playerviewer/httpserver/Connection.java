@@ -2,6 +2,7 @@ package me.danilafe.playerviewer.httpserver;
 
 
 
+import java.awt.List;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
@@ -22,12 +23,12 @@ import org.bukkit.scoreboard.ScoreboardManager;
 
 public class Connection {
 	
-	public HTTPServer parent;
-	public BufferedReader br;
-	public PrintStream ps;
-	public Socket s;
-	public ArrayList<String> args = new ArrayList<String>();
-	public Thread clientlisten = new Thread(){
+	protected HTTPServer parent;
+	protected BufferedReader br;
+	protected PrintStream ps;
+	protected Socket s;
+	protected ArrayList<String> args = new ArrayList<String>();
+	protected Thread clientlisten = new Thread(){
 		public void run(){
 			String st;
 			try {
@@ -46,7 +47,7 @@ public class Connection {
 		}
 	};
 	
-	public Connection(Socket sock, HTTPServer s){
+	protected Connection(Socket sock, HTTPServer s){
 		parent = s;
 		this.s = sock;
 		try{
@@ -62,7 +63,7 @@ public class Connection {
 	}
 	
 	@SuppressWarnings("deprecation")
-	public void command(String command){
+	protected void command(String command){
 		if(command.startsWith("GET")){
 			String[] pieces = command.split(" ");
 			if(pieces[1].equals("/")){
@@ -96,8 +97,11 @@ public class Connection {
 					ps.println(s);
 				}
 				
+				ArrayList<String> alerts =  new ArrayList<String>(parent.parent.alerts.values());
+				for(String alert: alerts){
+					ps.println(getInsideTag("div", alert, "alert"));
+				}
 				
-					
 					for(Player p: parent.parent.players){
 						ps.println("<div class=\"player\" onclick=\"window.open('player_" + p.getName() + ".html','Google!')\">");
 						ps.println(getInsideTag("h2", p.getName(), "center"));
@@ -292,15 +296,15 @@ public class Connection {
 		}
 	}
 	
-	public String getInsideTag(String tag, String text){
+	protected String getInsideTag(String tag, String text){
 		return "<" + tag + ">" + text + "</" + tag + ">";
 	}
 	
-	public String getInsideTag(String tag, String text, String classid){
+	protected String getInsideTag(String tag, String text, String classid){
 		return "<" + tag + " " + "class=\"" + classid + "\"" + ">" + text + "</" + tag + ">";
 	}
 	
-	public void printInfoElement(String title, String content){
+	protected void printInfoElement(String title, String content){
 		ps.println("<div class = \"infopiece\" >");
 		ps.println(getInsideTag("h2", title, "cent"));
 		ps.println(getInsideTag("h3", content, "cent"));
