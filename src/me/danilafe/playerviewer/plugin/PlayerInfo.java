@@ -67,6 +67,10 @@ public class PlayerInfo extends JavaPlugin{
 							}
 							alerts.put(args[1], alert);
 						}
+					} else if(args[0].equalsIgnoreCase("delalert")){
+						if(args.length > 1){
+							alerts.remove(args[1]);
+						}
 					}
 				}
 			}
