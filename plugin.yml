@@ -2,3 +2,6 @@ name: PlayerInfo
 main: me.danilafe.playerviewer.plugin.PlayerInfo
 version: 1.2
 description: A plugin that allows other people to check on your Server's players without having to join!
+commands:
+  checker:
+    description: The main command of the PlayerChecker plugin!
