@@ -15,6 +15,7 @@ import java.util.Calendar;
 import java.util.Set;
 
 import org.json.simple.*;
+import org.omg.CORBA.Request;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Objective;
@@ -157,6 +158,7 @@ public class Connection {
 						ps.println(red);
 					}
 					
+					ps.println();
 					ps.close();
 					try {
 						s.close();
@@ -187,6 +189,7 @@ public class Connection {
 						ps.println(red);
 					}
 					
+					ps.println();
 					ps.close();
 					try {
 						s.close();
@@ -257,7 +260,7 @@ public class Connection {
 						
 						ps.println("</body>");
 						ps.println("</html>");
-						
+						ps.println();
 						ps.close();
 						try {
 							s.close();
@@ -292,7 +295,7 @@ public class Connection {
 						}
 					}
 
-			}
+			} 
 		}
 	}
 	
