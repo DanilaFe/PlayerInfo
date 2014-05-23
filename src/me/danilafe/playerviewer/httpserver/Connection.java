@@ -17,6 +17,7 @@ import java.util.Set;
 import org.json.simple.*;
 import org.omg.CORBA.Request;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
@@ -313,6 +314,44 @@ public class Connection {
 		ps.println(getInsideTag("h3", content, "cent"));
 		ps.println("</div>");
 		ps.println("</div>");
+	}
+	
+	public String getLinkFor(int id){
+		System.out.println("Fetching URL for " + id + "(Material name " + Material.getMaterial(id).toString() + ")");
+		String matname = convertToNiceName(Material.getMaterial(id).name());
+		try {
+			Socket s = new Socket("minecraft.gamepedia.com", 80);
+			PrintStream ps = new PrintStream(s.getOutputStream());
+			BufferedReader br = new BufferedReader(new InputStreamReader(s.getInputStream()));
+			ps.println("GET /File:" + matname.replace("Ore", "(Ore)").replace("Log", "Wood").replace("Bed_Block", "Bed").replace("Web", "WebBlock").replace("Lapis", "Lapis_Lazuli").replace("Lapis_Lazuli_Block", "Lapis_Lazuli_(Block)") + ".png HTTP/1.1");
+			ps.println("Host: minecraft.gamepedia.com");
+			ps.println();
+			String response;
+			while((response = br.readLine()) != null){
+				if(response.contains("#filelinks")){
+					String rep1 = response.substring(response.indexOf("src") + 5);
+					System.out.println(rep1);
+					String rep2 = rep1.substring(0,rep1.indexOf("width") -2);
+					System.out.println(rep2);
+					return rep2;
+				}
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		return null;
+	}
+	
+	public String convertToNiceName(String materialname){
+		String news = materialname;
+		StringBuilder newsbuilder = new StringBuilder(materialname);
+		for(int i = 0; i < materialname.length(); i ++){
+			if(i != 0 && materialname.charAt(i-1) != '_' && materialname.charAt(i) != '_'){
+				newsbuilder.setCharAt(i, Character.toLowerCase(materialname.charAt(i)));
+			}
+		}
+		return newsbuilder.toString();
 	}
 
 
